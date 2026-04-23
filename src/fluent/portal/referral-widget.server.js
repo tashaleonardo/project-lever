@@ -1,8 +1,10 @@
+// @ts-nocheck
 ;(function () {
     var action = input ? (input.action || 'load') : 'load';
 
     if (action === 'load') {
         data.phase = 'intake';
+        data.requesting_facilities = _loadRequestingFacilities();
         return;
     }
 
@@ -86,6 +88,18 @@
     }
 
     // --- helpers ---
+
+    function _loadRequestingFacilities() {
+        var gr = new GlideRecord('sn_hcls_location');
+        gr.addQuery('u_available_beds', '>', 0);
+        gr.orderBy('name');
+        gr.query();
+        var list = [];
+        while (gr.next()) {
+            list.push({ sysId: gr.sys_id + '', name: gr.name + '' });
+        }
+        return list;
+    }
 
     function _scoreFacilities(notes) {
         var n = (notes + '').toUpperCase();
