@@ -96,5 +96,11 @@ export const x_1996578_projec_0_regional_referral = Table({
             label: 'Ambulance ID',
             maxLength: 40,
         }),
+
+        u_matched_facilities: StringColumn({
+            label: 'Matched Facilities',
+            maxLength: 1000,
+            default: '',
+        }),
     },
 })
