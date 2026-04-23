@@ -55,14 +55,15 @@
 
         <div class="form-group">
           <label for="lever-facility">
-            Requesting Facility sys_id <span class="text-danger">*</span>
+            Requesting Facility <span class="text-danger">*</span>
           </label>
-          <input id="lever-facility"
-                 type="text"
-                 class="form-control"
-                 ng-model="c.form.requesting_facility"
-                 placeholder="sys_id of the originating sn_hcls_location record"
-                 required />
+          <select id="lever-facility"
+                  class="form-control"
+                  ng-model="c.form.requesting_facility"
+                  ng-options="f.sysId as f.name for f in c.requesting_facilities"
+                  required>
+            <option value="">— Select Requesting Facility —</option>
+          </select>
         </div>
 
         <button type="button"

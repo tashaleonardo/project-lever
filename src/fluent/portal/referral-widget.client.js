@@ -3,17 +3,18 @@ function controller() {
     var c = this;
 
     // Initialise from server bootstrap data
-    c.phase             = c.data.phase      || 'intake';
-    c.error             = c.data.error      || '';
-    c.p1NotesError      = '';
-    c.facilities        = c.data.facilities || [];
-    c.referral_number   = c.data.referral_number || '';
-    c.selected_facility = null;
+    c.phase                  = c.data.phase                  || 'intake';
+    c.error                  = c.data.error                  || '';
+    c.p1NotesError           = '';
+    c.requesting_facilities  = c.data.requesting_facilities  || [];
+    c.facilities             = c.data.facilities             || [];
+    c.referral_number        = c.data.referral_number        || '';
+    c.selected_facility      = null;
 
     c.form = {
         priority:            '',
         clinical_notes:      '',
-        requesting_facility: '',
+        requesting_facility: null,
     };
 
     // ── Phase helpers ────────────────────────────────────────────────────────
@@ -30,7 +31,7 @@ function controller() {
         c.referral_number   = '';
         c.selected_facility = null;
         c.data.referral_id  = '';
-        c.form = { priority: '', clinical_notes: '', requesting_facility: '' };
+        c.form = { priority: '', clinical_notes: '', requesting_facility: null };
     };
 
     // ── Server calls ─────────────────────────────────────────────────────────
@@ -42,7 +43,7 @@ function controller() {
         c.error        = '';
         c.p1NotesError = '';
 
-        if (!c.form.priority || !c.form.clinical_notes.trim() || !c.form.requesting_facility.trim()) {
+        if (!c.form.priority || !c.form.clinical_notes.trim() || !c.form.requesting_facility) {
             c.error = 'All fields are required.';
             return;
         }
