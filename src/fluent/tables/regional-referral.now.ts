@@ -73,7 +73,7 @@ export const x_1996578_projec_0_regional_referral = Table({
 
         u_ai_summary_source: ChoiceColumn({
             label: 'AI Summary Source',
-            default: 'none',
+            default: 'gemini',
             dropdown: 'dropdown_without_none',
             choices: {
                 gemini: { label: 'Gemini' },
