@@ -1,4 +1,224 @@
+// ─── Color palette — every hex value lives here, nowhere else ────────────────
+
+$lever-navy:    #0f1f5c;
+$lever-blue:    #1e3a8a;
+$lever-teal:    #0d9488;
+$lever-emerald: #059669;
+$lever-mint:    #34d399;
+$lever-white:   #ffffff;
+
+// Derived alpha values (SCSS rgba() resolves against the variables above)
+$lever-glass-bg:      rgba($lever-white,   0.08);
+$lever-glass-bg-md:   rgba($lever-white,   0.15);
+$lever-glass-border:  rgba($lever-white,   0.22);
+$lever-shadow-dark:   rgba($lever-navy,    0.55);
+$lever-glow-teal:     rgba($lever-teal,    0.45);
+$lever-glow-emerald:  rgba($lever-emerald, 0.50);
+$lever-glow-mint:     rgba($lever-mint,    0.42);
+$lever-navy-80:       rgba($lever-navy,    0.80);
+$lever-teal-25:       rgba($lever-teal,    0.25);
+$lever-emerald-25:    rgba($lever-emerald, 0.25);
+$lever-white-60:      rgba($lever-white,   0.60);
+$lever-white-70:      rgba($lever-white,   0.70);
+$lever-white-15:      rgba($lever-white,   0.15);
+
+// Gradient presets
+$lever-grad-bg:      linear-gradient(150deg, $lever-navy 0%, $lever-teal 55%, $lever-emerald 100%);
+$lever-grad-header:  linear-gradient(135deg, $lever-navy, $lever-teal);
+$lever-grad-action:  linear-gradient(135deg, $lever-blue, $lever-teal);
+$lever-grad-success: linear-gradient(135deg, $lever-teal, $lever-emerald);
+$lever-grad-accent:  linear-gradient(135deg, $lever-emerald, $lever-mint);
+
+// ─── Widget shell — gradient canvas for all glass layers ─────────────────────
+
 .lever-referral-widget {
+    background: $lever-grad-bg;
+    border-radius: 16px;
+    padding: $grid-gutter-width;
+    color: $lever-white;
+
+    // ── Bootstrap panel glass base (applies to every .panel inside the widget) ─
+
+    .panel {
+        background:              $lever-glass-bg;
+        border:                  1px solid $lever-glass-border;
+        border-radius:           12px;
+        box-shadow:              0 8px 32px $lever-shadow-dark;
+        backdrop-filter:         blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        color:                   $lever-white;
+        overflow:                hidden;
+    }
+
+    .panel-body {
+        color: $lever-white;
+    }
+
+    .panel-footer {
+        background:  $lever-glass-bg;
+        border-top:  1px solid $lever-glass-border;
+        color:       $lever-white;
+    }
+
+    .panel-heading {
+        border-bottom: 1px solid $lever-glass-border;
+    }
+
+    .panel-heading .panel-title {
+        color: $lever-white;
+        font-weight: $headings-font-weight;
+    }
+
+    // ── Per-phase panel header gradients ──────────────────────────────────────
+
+    .panel-primary > .panel-heading { background: $lever-grad-header;  }
+    .panel-info    > .panel-heading { background: $lever-grad-action;  }
+    .panel-success > .panel-heading { background: $lever-grad-success; }
+
+    // ── Form controls ─────────────────────────────────────────────────────────
+
+    label {
+        color:       $lever-white-70;
+        font-weight: 600;
+    }
+
+    .text-danger {
+        color: $lever-mint !important;
+    }
+
+    .form-control {
+        background:   $lever-glass-bg-md;
+        border:       1px solid $lever-glass-border;
+        border-radius: 8px;
+        color:        $lever-white;
+        box-shadow:   none;
+
+        &::placeholder {
+            color: $lever-white-60;
+        }
+
+        &:focus {
+            background:  rgba($lever-white, 0.20);
+            border-color: $lever-teal;
+            color:       $lever-white;
+            box-shadow:  0 0 0 3px $lever-teal-25;
+            outline:     none;
+        }
+    }
+
+    // Options render OS-native; set navy bg so they stay legible
+    select.form-control option {
+        background: $lever-navy;
+        color:      $lever-white;
+    }
+
+    .has-error .form-control {
+        border-color: $lever-mint;
+        box-shadow:   0 0 0 3px $lever-glow-mint;
+    }
+
+    .help-block {
+        color: $lever-mint;
+    }
+
+    // ── Alert overrides ───────────────────────────────────────────────────────
+
+    .alert-danger {
+        background:   $lever-navy-80;
+        border:       1px solid $lever-teal-25;
+        border-left:  4px solid $lever-teal;
+        border-radius: 8px;
+        color:        $lever-white;
+    }
+
+    // ── P1 warning — teal gradient accent, overrides alert-danger red entirely ─
+
+    .lever-p1-warning {
+        background:              $lever-grad-action;
+        border:                  1px solid $lever-glass-border;
+        border-left:             4px solid $lever-mint;
+        border-radius:           8px;
+        padding:                 $padding-large-vertical $padding-large-horizontal;
+        margin-bottom:           $line-height-computed;
+        color:                   $lever-white;
+        backdrop-filter:         blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow:              0 4px 18px $lever-glow-teal;
+    }
+
+    // ── Buttons ───────────────────────────────────────────────────────────────
+
+    .btn-primary {
+        background:    $lever-grad-action;
+        border:        none;
+        border-radius: 8px;
+        color:         $lever-white;
+        font-weight:   600;
+        letter-spacing: 0.03em;
+        box-shadow:    0 4px 18px $lever-glow-teal;
+        transition:    all 0.20s ease;
+
+        &:hover,
+        &:focus {
+            background: $lever-grad-success;
+            box-shadow: 0 6px 24px $lever-glow-emerald;
+            color:      $lever-white;
+            transform:  translateY(-2px);
+        }
+
+        &:active {
+            transform:  translateY(0);
+            box-shadow: 0 3px 12px $lever-glow-teal;
+        }
+    }
+
+    .btn-success {
+        background:    $lever-grad-success;
+        border:        none;
+        border-radius: 8px;
+        color:         $lever-white;
+        font-weight:   600;
+        letter-spacing: 0.03em;
+        box-shadow:    0 4px 18px $lever-glow-emerald;
+        transition:    all 0.20s ease;
+
+        &:hover,
+        &:focus {
+            background: $lever-grad-accent;
+            box-shadow: 0 6px 28px $lever-glow-mint;
+            color:      $lever-white;
+            transform:  translateY(-2px);
+        }
+
+        &:active {
+            transform:  translateY(0);
+            box-shadow: 0 3px 14px $lever-glow-emerald;
+        }
+
+        &[disabled],
+        &:disabled {
+            background: $lever-teal-25;
+            box-shadow: none;
+            transform:  none;
+            cursor:     not-allowed;
+            color:      $lever-white-60;
+        }
+    }
+
+    .btn-default {
+        background:    $lever-glass-bg-md;
+        border:        1px solid $lever-glass-border;
+        border-radius: 8px;
+        color:         $lever-white;
+        transition:    all 0.20s ease;
+
+        &:hover,
+        &:focus {
+            background: rgba($lever-white, 0.22);
+            color:      $lever-white;
+            box-shadow: 0 4px 14px $lever-glow-teal;
+        }
+    }
 
     // ── Facility card grid ────────────────────────────────────────────────────
 
@@ -7,58 +227,120 @@
     }
 
     .lever-facility-card {
-        cursor: pointer;
-        transition: box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out;
-        margin-bottom: $grid-gutter-width / 2;
+        background:              $lever-glass-bg;
+        border:                  1px solid $lever-glass-border;
+        border-radius:           12px;
+        cursor:                  pointer;
+        transition:              all 0.22s ease;
+        margin-bottom:           $grid-gutter-width / 2;
+        backdrop-filter:         blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow:              0 4px 16px $lever-shadow-dark;
+        color:                   $lever-white;
+        overflow:                hidden;
 
-        &:focus {
-            outline: 2px solid $brand-primary;
-            outline-offset: 2px;
-        }
-
-        &.lever-card-selected {
-            border-color: $brand-success;
-            box-shadow: 0 0 0 2px $brand-success;
+        // Facility card headings always use the action gradient
+        > .panel-heading,
+        &.panel-default  > .panel-heading,
+        &.panel-success  > .panel-heading {
+            background: $lever-grad-header;
         }
 
         .lever-facility-name {
-            white-space: nowrap;
-            overflow: hidden;
+            white-space:   nowrap;
+            overflow:      hidden;
             text-overflow: ellipsis;
+            color:         $lever-white;
         }
 
         .lever-facility-table {
             margin-bottom: 0;
+            color:         $lever-white;
 
             th {
-                font-weight: $headings-font-weight;
-                color: $text-muted;
-                width: 55%;
+                color:        $lever-white-60;
+                font-weight:  600;
+                border-color: $lever-white-15;
+                width:        55%;
+            }
+
+            td {
+                color:        $lever-white;
+                border-color: $lever-white-15;
             }
         }
 
         .lever-selected-badge {
-            font-weight: $headings-font-weight;
-            color: $brand-success;
+            color:       $lever-mint;
+            font-weight: 700;
+        }
+
+        &:hover {
+            background: $lever-glass-bg-md;
+            box-shadow: 0 6px 24px $lever-glow-teal;
+            transform:  translateY(-2px);
+        }
+
+        &:focus {
+            outline:        2px solid $lever-teal;
+            outline-offset: 2px;
+        }
+
+        &.lever-card-selected {
+            background:  $lever-emerald-25;
+            border-color: $lever-emerald;
+            box-shadow:
+                0 0 0 2px $lever-emerald,
+                0 0 24px $lever-glow-emerald,
+                0 8px 32px $lever-shadow-dark;
+            transform:   translateY(-3px);
+
+            > .panel-heading {
+                background: $lever-grad-success;
+            }
         }
     }
 
     // ── Done phase ────────────────────────────────────────────────────────────
 
     .lever-done-body {
-        padding-top: $padding-large-vertical * 2;
-        padding-bottom: $padding-large-vertical * 2;
+        padding-top:    $padding-large-vertical * 3;
+        padding-bottom: $padding-large-vertical * 3;
     }
 
     .lever-done-icon {
-        display: block;
-        font-size: $font-size-base * 4;
-        color: $brand-success;
+        display:       block;
+        font-size:     $font-size-base * 5;
+        color:         $lever-mint;
         margin-bottom: $line-height-computed;
+        filter:        drop-shadow(0 0 14px $lever-glow-mint);
     }
 
     .lever-referral-number {
-        font-size: $font-size-large * 1.5;
-        letter-spacing: 0.05em;
+        font-size:     $font-size-large * 2;
+        letter-spacing: 0.08em;
+        color:         $lever-mint;
+        text-shadow:   0 0 20px $lever-glow-mint;
+    }
+
+    // ── Misc text overrides ───────────────────────────────────────────────────
+
+    .text-muted {
+        color: $lever-white-60 !important;
+    }
+
+    h4,
+    .lead,
+    strong {
+        color: $lever-white;
+    }
+
+    hr {
+        border-color: $lever-glass-border;
+    }
+
+    .table > tbody > tr > td,
+    .table > tbody > tr > th {
+        border-top-color: $lever-white-15;
     }
 }
