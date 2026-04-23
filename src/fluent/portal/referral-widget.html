@@ -1,0 +1,200 @@
+<div class="lever-referral-widget">
+
+  <!-- ═══════════════════════════════════════════════════════
+       Phase: intake — priority, notes, requesting facility
+       ═══════════════════════════════════════════════════════ -->
+  <div ng-if="c.phase === 'intake'">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-transfer"></span>
+          New Patient Referral
+        </h3>
+      </div>
+      <div class="panel-body">
+
+        <!-- General submission error -->
+        <div class="alert alert-danger" role="alert" ng-if="c.error">
+          <span class="glyphicon glyphicon-exclamation-sign"></span>
+          {{c.error}}
+        </div>
+
+        <div class="form-group">
+          <label for="lever-priority">
+            Patient Priority <span class="text-danger">*</span>
+          </label>
+          <select id="lever-priority" class="form-control" ng-model="c.form.priority" required>
+            <option value="">— Select Priority —</option>
+            <option value="1">Priority 1 — Critical</option>
+            <option value="2">Priority 2 — Urgent</option>
+            <option value="3">Priority 3 — Non-urgent</option>
+          </select>
+        </div>
+
+        <!-- P1 warning banner — mirrors TASK-17 onChange behaviour -->
+        <div class="alert alert-danger" role="alert" ng-if="c.form.priority === '1'">
+          <strong>
+            <span class="glyphicon glyphicon-warning-sign"></span>
+            PRIORITY 1 — CRITICAL:
+          </strong>
+          Detailed clinical notes are required (minimum 20 characters).
+        </div>
+
+        <div class="form-group" ng-class="{'has-error': c.p1NotesError}">
+          <label for="lever-notes">
+            Clinical Notes <span class="text-danger">*</span>
+          </label>
+          <textarea id="lever-notes"
+                    class="form-control"
+                    rows="5"
+                    ng-model="c.form.clinical_notes"
+                    placeholder="Describe patient condition and required capabilities (e.g. TRAUMA, CARDIAC, ICU, OB) to enable auto-matching."
+                    required></textarea>
+          <p class="help-block" ng-if="c.p1NotesError">{{c.p1NotesError}}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="lever-facility">
+            Requesting Facility sys_id <span class="text-danger">*</span>
+          </label>
+          <input id="lever-facility"
+                 type="text"
+                 class="form-control"
+                 ng-model="c.form.requesting_facility"
+                 placeholder="sys_id of the originating sn_hcls_location record"
+                 required />
+        </div>
+
+        <button type="button"
+                class="btn btn-primary btn-block"
+                ng-click="c.submitIntake()">
+          <span class="glyphicon glyphicon-send"></span>
+          Submit Referral
+        </button>
+
+      </div>
+    </div>
+  </div><!-- /intake -->
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       Phase: select — 3-card facility chooser
+       ═══════════════════════════════════════════════════════ -->
+  <div ng-if="c.phase === 'select'">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-map-marker"></span>
+          Select Destination Facility
+        </h3>
+      </div>
+      <div class="panel-body">
+
+        <p class="text-muted">
+          Tap a facility card to select it, then click <strong>Confirm Selection</strong>.
+        </p>
+
+        <div class="alert alert-danger" role="alert" ng-if="c.error">
+          <span class="glyphicon glyphicon-exclamation-sign"></span>
+          {{c.error}}
+        </div>
+
+        <!-- All 3 cards visible simultaneously — no carousel/pagination -->
+        <div class="row lever-facility-row">
+          <div class="col-xs-12 col-sm-4"
+               ng-repeat="f in c.facilities track by f.sysId">
+            <div class="panel lever-facility-card"
+                 ng-class="{
+                   'panel-success lever-card-selected': c.selected_facility === f,
+                   'panel-default':                     c.selected_facility !== f
+                 }"
+                 ng-click="c.selectFacility(f)"
+                 role="button"
+                 tabindex="0"
+                 aria-pressed="{{c.selected_facility === f}}">
+
+              <div class="panel-heading">
+                <h4 class="panel-title lever-facility-name">{{f.name}}</h4>
+              </div>
+
+              <div class="panel-body">
+                <table class="table table-condensed lever-facility-table">
+                  <tbody>
+                    <tr>
+                      <th>Zone</th>
+                      <td>{{f.zone | uppercase}}</td>
+                    </tr>
+                    <tr>
+                      <th>Available Beds</th>
+                      <td>{{f.beds}}</td>
+                    </tr>
+                    <tr>
+                      <th>Match Score</th>
+                      <td>{{f.score}} / 4</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="panel-footer text-center lever-selected-badge"
+                   ng-if="c.selected_facility === f">
+                <span class="glyphicon glyphicon-ok"></span>
+                Selected
+              </div>
+
+            </div>
+          </div>
+        </div><!-- /row -->
+
+        <button type="button"
+                class="btn btn-success btn-block"
+                ng-click="c.confirmSelection()"
+                ng-disabled="!c.selected_facility">
+          <span class="glyphicon glyphicon-ok-sign"></span>
+          Confirm Selection
+        </button>
+
+      </div>
+    </div>
+  </div><!-- /select -->
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       Phase: done — referral number + submit-another link
+       ═══════════════════════════════════════════════════════ -->
+  <div ng-if="c.phase === 'done'">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-ok-circle"></span>
+          Referral Submitted
+        </h3>
+      </div>
+      <div class="panel-body text-center lever-done-body">
+
+        <span class="glyphicon glyphicon-ok-circle lever-done-icon"></span>
+
+        <h4>Referral Number</h4>
+        <p class="lead lever-referral-number">
+          <strong>{{c.referral_number}}</strong>
+        </p>
+
+        <p class="text-muted">
+          Destination facility confirmed. EMS dispatch will proceed automatically
+          once the referral is approved.
+        </p>
+
+        <hr />
+
+        <a href=""
+           class="btn btn-default"
+           ng-click="c.submitAnother()">
+          <span class="glyphicon glyphicon-plus"></span>
+          Submit Another Referral
+        </a>
+
+      </div>
+    </div>
+  </div><!-- /done -->
+
+</div><!-- /lever-referral-widget -->

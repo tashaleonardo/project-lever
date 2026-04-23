@@ -1,0 +1,64 @@
+.lever-referral-widget {
+
+    // ── Facility card grid ────────────────────────────────────────────────────
+
+    .lever-facility-row {
+        margin-bottom: $padding-large-vertical;
+    }
+
+    .lever-facility-card {
+        cursor: pointer;
+        transition: box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out;
+        margin-bottom: $grid-gutter-width / 2;
+
+        &:focus {
+            outline: 2px solid $brand-primary;
+            outline-offset: 2px;
+        }
+
+        &.lever-card-selected {
+            border-color: $brand-success;
+            box-shadow: 0 0 0 2px $brand-success;
+        }
+
+        .lever-facility-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .lever-facility-table {
+            margin-bottom: 0;
+
+            th {
+                font-weight: $headings-font-weight;
+                color: $text-muted;
+                width: 55%;
+            }
+        }
+
+        .lever-selected-badge {
+            font-weight: $headings-font-weight;
+            color: $brand-success;
+        }
+    }
+
+    // ── Done phase ────────────────────────────────────────────────────────────
+
+    .lever-done-body {
+        padding-top: $padding-large-vertical * 2;
+        padding-bottom: $padding-large-vertical * 2;
+    }
+
+    .lever-done-icon {
+        display: block;
+        font-size: $font-size-base * 4;
+        color: $brand-success;
+        margin-bottom: $line-height-computed;
+    }
+
+    .lever-referral-number {
+        font-size: $font-size-large * 1.5;
+        letter-spacing: 0.05em;
+    }
+}
