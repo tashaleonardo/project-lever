@@ -77,6 +77,7 @@ export const x_1996578_projec_0_regional_referral = Table({
             dropdown: 'dropdown_without_none',
             choices: {
                 gemini: { label: 'Gemini' },
+                groq: { label: 'Groq' },
                 mock: { label: 'Local Fallback' },
                 none: { label: 'None' },
             },
