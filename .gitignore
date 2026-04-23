@@ -5,3 +5,6 @@ node_modules/
 target/
 *.tsbuildinfo
 .jest_cache
+metadata/
+@types/
+src/fluent/generated/

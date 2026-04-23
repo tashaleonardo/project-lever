@@ -1,6 +1,10 @@
 {
-  "scope": "x_1996578_projec_0",
-  "scopeId": "a77c24f5ac2a47cb88d1d7aef2d71667",
-  "name": "PROJECT LEVER",
-  "tsconfigPath": "./src/server/tsconfig.json"
+    "scope": "x_1996578_projec_0",
+    "scopeId": "8ecc64ac935083101d3df14fdd03d6ad",
+    "name": "PROJECT LEVER",
+    "tsconfigPath": "./src/server/tsconfig.json",
+    "licensing": {
+        "enforceLicense": "none"
+    },
+    "description": "A centralized healthcare command center designed to streamline emergency patient referrals from rural clinics to regional hospitals. PROJECT LEVER utilizes Agentic AI for case summarization, dynamic Service Portal intakes, and automated workflows to optimize emergency transport and ICU admissions."
 }
