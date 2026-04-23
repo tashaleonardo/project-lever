@@ -5,7 +5,7 @@ export const decrementBeds = BusinessRule({
   name: 'Decrement Beds on Hand-off',
   table: 'x_1996578_projec_0_regional_referral',
   when: 'after', action: ['update'], active: true, order: 100,
-  filterCondition: 'u_handoff_confirmedCHANGESTO true',
+  filterCondition: 'u_handoff_confirmed=true',
 
   script: `
 (function executeRule(current, previous) {
