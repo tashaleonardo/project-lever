@@ -91,7 +91,8 @@
 
     function _loadRequestingFacilities() {
         var gr = new GlideRecord('sn_hcls_location');
-        gr.addQuery('u_available_beds', '>', 0);
+        gr.addQuery('status', 'Active');
+        gr.addQuery('name', 'CONTAINS', 'RHU');
         gr.orderBy('name');
         gr.query();
         var list = [];
@@ -111,7 +112,8 @@
 
         var gr = new GlideRecord('sn_hcls_location');
         gr.addQuery('u_available_beds', '>', 0);
-        gr.addNotNullQuery('u_zone');
+        gr.addNotNullQuery('u_capabilities');
+        gr.addQuery('u_capabilities', '!=', '');
         gr.query();
 
         var results = [];
