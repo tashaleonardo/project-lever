@@ -1,222 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
 // ─── Color palette — every hex value lives here, nowhere else ────────────────
 
-$lever-navy:    #0f1f5c;
-$lever-blue:    #1e3a8a;
-$lever-teal:    #0d9488;
-$lever-emerald: #059669;
-$lever-mint:    #34d399;
-$lever-white:   #ffffff;
+$lv-navy:    #0D1B2A;
+$lv-teal:    #1D9E75;
+$lv-emerald: #0F6E56;
+$lv-white:   #ffffff;
 
-// Derived alpha values (SCSS rgba() resolves against the variables above)
-$lever-glass-bg:      rgba($lever-white,   0.08);
-$lever-glass-bg-md:   rgba($lever-white,   0.15);
-$lever-glass-border:  rgba($lever-white,   0.22);
-$lever-shadow-dark:   rgba($lever-navy,    0.55);
-$lever-glow-teal:     rgba($lever-teal,    0.45);
-$lever-glow-emerald:  rgba($lever-emerald, 0.50);
-$lever-glow-mint:     rgba($lever-mint,    0.42);
-$lever-navy-80:       rgba($lever-navy,    0.80);
-$lever-teal-25:       rgba($lever-teal,    0.25);
-$lever-emerald-25:    rgba($lever-emerald, 0.25);
-$lever-white-60:      rgba($lever-white,   0.60);
-$lever-white-70:      rgba($lever-white,   0.70);
-$lever-white-15:      rgba($lever-white,   0.15);
+// Derived
+$lv-glass-bg:     rgba($lv-white, 0.06);
+$lv-glass-bg-md:  rgba($lv-white, 0.10);
+$lv-glass-border: rgba($lv-white, 0.10);
+$lv-label:        rgba($lv-white, 0.55);
+$lv-shadow-dark:  rgba($lv-navy,  0.50);
+$lv-teal-glow:    rgba($lv-teal,  0.20);
+$lv-teal-glow-md: rgba($lv-teal,  0.25);
 
 // Gradient presets
-$lever-grad-bg:      linear-gradient(150deg, $lever-navy 0%, $lever-teal 55%, $lever-emerald 100%);
-$lever-grad-header:  linear-gradient(135deg, $lever-navy, $lever-teal);
-$lever-grad-action:  linear-gradient(135deg, $lever-blue, $lever-teal);
-$lever-grad-success: linear-gradient(135deg, $lever-teal, $lever-emerald);
-$lever-grad-accent:  linear-gradient(135deg, $lever-emerald, $lever-mint);
+$lv-grad-bg:  radial-gradient(ellipse 80% 60% at 15% 0%, rgba($lv-teal, 0.10) 0%, $lv-navy 65%);
+$lv-grad-btn: linear-gradient(135deg, $lv-navy 0%, $lv-teal 100%);
 
-// ─── Widget shell — gradient canvas for all glass layers ─────────────────────
+// ─── Widget shell — subtle depth canvas ──────────────────────────────────────
 
 .lever-referral-widget {
-    background: $lever-grad-bg;
-    border-radius: 16px;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background:  $lv-grad-bg;
+    background-color: $lv-navy;
+    border-radius: 20px;
     padding: $grid-gutter-width;
-    color: $lever-white;
+    color: $lv-white;
 
-    // ── Bootstrap panel glass base (applies to every .panel inside the widget) ─
+    // ── Bootstrap panel glass base ────────────────────────────────────────────
 
     .panel {
-        background:              $lever-glass-bg;
-        border:                  1px solid $lever-glass-border;
-        border-radius:           12px;
-        box-shadow:              0 8px 32px $lever-shadow-dark;
-        backdrop-filter:         blur(14px);
-        -webkit-backdrop-filter: blur(14px);
-        color:                   $lever-white;
+        background:              $lv-glass-bg;
+        border:                  1px solid $lv-glass-border;
+        border-radius:           16px;
+        box-shadow:              0 8px 32px $lv-shadow-dark,
+                                 inset 0 1px 0 rgba($lv-white, 0.07);
+        backdrop-filter:         blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        color:                   $lv-white;
         overflow:                hidden;
     }
 
     .panel-body {
-        color: $lever-white;
+        color: $lv-white;
     }
 
     .panel-footer {
-        background:  $lever-glass-bg;
-        border-top:  1px solid $lever-glass-border;
-        color:       $lever-white;
+        background:  transparent;
+        border-top:  1px solid $lv-glass-border;
+        color:       $lv-white;
     }
 
-    .panel-heading {
-        border-bottom: 1px solid $lever-glass-border;
+    // All panel headings: transparent, no colored bar — let them breathe
+    .panel-heading,
+    .panel-primary > .panel-heading,
+    .panel-info    > .panel-heading,
+    .panel-success > .panel-heading {
+        background:    transparent !important;
+        border-bottom: 1px solid $lv-glass-border;
     }
 
     .panel-heading .panel-title {
-        color: $lever-white;
-        font-weight: $headings-font-weight;
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+        font-size:   18px;
+        font-weight: 600;
+        color:       $lv-white;
     }
-
-    // ── Per-phase panel header gradients ──────────────────────────────────────
-
-    .panel-primary > .panel-heading { background: $lever-grad-header;  }
-    .panel-info    > .panel-heading { background: $lever-grad-action;  }
-    .panel-success > .panel-heading { background: $lever-grad-success; }
 
     // ── Form controls ─────────────────────────────────────────────────────────
 
     label {
-        color:       $lever-white-70;
-        font-weight: 600;
+        font-size:      12px;
+        font-weight:    500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color:          $lv-label;
     }
 
     .text-danger {
-        color: $lever-mint !important;
+        color: $lv-teal !important;
     }
 
     .form-control {
-        background:   $lever-glass-bg-md;
-        border:       1px solid $lever-glass-border;
-        border-radius: 8px;
-        color:        $lever-white;
-        box-shadow:   none;
+        background:    rgba($lv-white, 0.08);
+        border:        1px solid rgba($lv-white, 0.15);
+        border-radius: 10px;
+        color:         $lv-white;
+        box-shadow:    none;
+        font-family:   'Plus Jakarta Sans', system-ui, sans-serif;
+        font-size:     14px;
 
         &::placeholder {
-            color: $lever-white-60;
+            color: rgba($lv-white, 0.40);
         }
 
         &:focus {
-            background:  rgba($lever-white, 0.20);
-            border-color: $lever-teal;
-            color:       $lever-white;
-            box-shadow:  0 0 0 3px $lever-teal-25;
-            outline:     none;
+            background:   rgba($lv-white, 0.11);
+            border-color: $lv-teal;
+            color:        $lv-white;
+            box-shadow:   0 0 0 3px $lv-teal-glow;
+            outline:      none;
         }
     }
 
-    // Options render OS-native; set navy bg so they stay legible
     select.form-control option {
-        background: $lever-navy;
-        color:      $lever-white;
+        background: $lv-navy;
+        color:      $lv-white;
     }
 
     .has-error .form-control {
-        border-color: $lever-mint;
-        box-shadow:   0 0 0 3px $lever-glow-mint;
+        border-color: $lv-teal;
+        box-shadow:   0 0 0 3px $lv-teal-glow;
     }
 
     .help-block {
-        color: $lever-mint;
+        color:     $lv-teal;
+        font-size: 13px;
     }
 
-    // ── Alert overrides ───────────────────────────────────────────────────────
+    // ── Alerts ────────────────────────────────────────────────────────────────
 
     .alert-danger {
-        background:   $lever-navy-80;
-        border:       1px solid $lever-teal-25;
-        border-left:  4px solid $lever-teal;
-        border-radius: 8px;
-        color:        $lever-white;
+        background:    rgba($lv-navy, 0.75);
+        border:        1px solid rgba($lv-white, 0.12);
+        border-left:   3px solid $lv-teal;
+        border-radius: 10px;
+        color:         $lv-white;
+        font-size:     14px;
     }
 
-    // ── P1 warning — teal gradient accent, overrides alert-danger red entirely ─
+    // ── P1 warning ────────────────────────────────────────────────────────────
 
     .lever-p1-warning {
-        background:              $lever-grad-action;
-        border:                  1px solid $lever-glass-border;
-        border-left:             4px solid $lever-mint;
-        border-radius:           8px;
-        padding:                 $padding-large-vertical $padding-large-horizontal;
-        margin-bottom:           $line-height-computed;
-        color:                   $lever-white;
-        backdrop-filter:         blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        box-shadow:              0 4px 18px $lever-glow-teal;
+        background:    rgba($lv-teal, 0.12);
+        border:        1px solid rgba($lv-teal, 0.30);
+        border-left:   3px solid $lv-teal;
+        border-radius: 10px;
+        padding:       $padding-large-vertical $padding-large-horizontal;
+        margin-bottom: $line-height-computed;
+        color:         $lv-white;
+        font-size:     14px;
     }
 
     // ── Buttons ───────────────────────────────────────────────────────────────
 
-    .btn-primary {
-        background:    $lever-grad-action;
-        border:        none;
-        border-radius: 8px;
-        color:         $lever-white;
-        font-weight:   600;
-        letter-spacing: 0.03em;
-        box-shadow:    0 4px 18px $lever-glow-teal;
-        transition:    all 0.20s ease;
-
-        &:hover,
-        &:focus {
-            background: $lever-grad-success;
-            box-shadow: 0 6px 24px $lever-glow-emerald;
-            color:      $lever-white;
-            transform:  translateY(-2px);
-        }
-
-        &:active {
-            transform:  translateY(0);
-            box-shadow: 0 3px 12px $lever-glow-teal;
-        }
-    }
-
+    .btn-primary,
     .btn-success {
-        background:    $lever-grad-success;
-        border:        none;
-        border-radius: 8px;
-        color:         $lever-white;
-        font-weight:   600;
-        letter-spacing: 0.03em;
-        box-shadow:    0 4px 18px $lever-glow-emerald;
-        transition:    all 0.20s ease;
+        background:     $lv-grad-btn;
+        border:         none;
+        border-radius:  10px;
+        color:          $lv-white;
+        font-family:    'Plus Jakarta Sans', system-ui, sans-serif;
+        font-weight:    600;
+        font-size:      14px;
+        letter-spacing: 0.02em;
+        box-shadow:     0 4px 16px $lv-teal-glow;
+        transition:     all 0.2s ease;
 
         &:hover,
         &:focus {
-            background: $lever-grad-accent;
-            box-shadow: 0 6px 28px $lever-glow-mint;
-            color:      $lever-white;
-            transform:  translateY(-2px);
+            filter:     brightness(1.08);
+            box-shadow: 0 6px 22px $lv-teal-glow-md;
+            color:      $lv-white;
+            transform:  translateY(-1px);
         }
 
         &:active {
+            filter:     brightness(1.0);
             transform:  translateY(0);
-            box-shadow: 0 3px 14px $lever-glow-emerald;
+            box-shadow: 0 2px 10px $lv-teal-glow;
         }
 
         &[disabled],
         &:disabled {
-            background: $lever-teal-25;
+            background: rgba($lv-white, 0.10);
             box-shadow: none;
+            filter:     none;
             transform:  none;
             cursor:     not-allowed;
-            color:      $lever-white-60;
+            color:      rgba($lv-white, 0.40);
         }
     }
 
     .btn-default {
-        background:    $lever-glass-bg-md;
-        border:        1px solid $lever-glass-border;
-        border-radius: 8px;
-        color:         $lever-white;
-        transition:    all 0.20s ease;
+        background:    $lv-glass-bg;
+        border:        1px solid $lv-glass-border;
+        border-radius: 10px;
+        color:         $lv-white;
+        font-family:   'Plus Jakarta Sans', system-ui, sans-serif;
+        transition:    all 0.2s ease;
 
         &:hover,
         &:focus {
-            background: rgba($lever-white, 0.22);
-            color:      $lever-white;
-            box-shadow: 0 4px 14px $lever-glow-teal;
+            background:   $lv-glass-bg-md;
+            border-color: rgba($lv-white, 0.25);
+            color:        $lv-white;
         }
     }
 
@@ -226,78 +207,93 @@ $lever-grad-accent:  linear-gradient(135deg, $lever-emerald, $lever-mint);
         margin-bottom: $padding-large-vertical;
     }
 
-    .lever-facility-card {
-        background:              $lever-glass-bg;
-        border:                  1px solid $lever-glass-border;
-        border-radius:           12px;
-        cursor:                  pointer;
-        transition:              all 0.22s ease;
-        margin-bottom:           $grid-gutter-width / 2;
-        backdrop-filter:         blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        box-shadow:              0 4px 16px $lever-shadow-dark;
-        color:                   $lever-white;
-        overflow:                hidden;
+    @keyframes lv-card-in {
+        from {
+            opacity:   0;
+            transform: translateY(12px);
+        }
+        to {
+            opacity:   1;
+            transform: translateY(0);
+        }
+    }
 
-        // Facility card headings always use the action gradient
+    // Stagger per column position
+    .lever-facility-row .col-xs-12:nth-child(1) .lever-facility-card { animation-delay:   0ms; }
+    .lever-facility-row .col-xs-12:nth-child(2) .lever-facility-card { animation-delay:  80ms; }
+    .lever-facility-row .col-xs-12:nth-child(3) .lever-facility-card { animation-delay: 160ms; }
+
+    .lever-facility-card {
+        background:              $lv-glass-bg;
+        border:                  1px solid $lv-glass-border;
+        border-radius:           14px;
+        cursor:                  pointer;
+        transition:              all 0.2s ease;
+        margin-bottom:           $grid-gutter-width / 2;
+        backdrop-filter:         blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow:              0 4px 20px $lv-shadow-dark;
+        color:                   $lv-white;
+        overflow:                hidden;
+        animation:               lv-card-in 300ms ease both;
+
         > .panel-heading,
         &.panel-default  > .panel-heading,
         &.panel-success  > .panel-heading {
-            background: $lever-grad-header;
+            background: transparent !important;
         }
 
         .lever-facility-name {
+            font-family:   'Plus Jakarta Sans', system-ui, sans-serif;
+            font-size:     16px;
+            font-weight:   600;
             white-space:   nowrap;
             overflow:      hidden;
             text-overflow: ellipsis;
-            color:         $lever-white;
+            color:         $lv-white;
         }
 
         .lever-facility-table {
             margin-bottom: 0;
-            color:         $lever-white;
 
             th {
-                color:        $lever-white-60;
-                font-weight:  600;
-                border-color: $lever-white-15;
+                color:        rgba($lv-white, 0.50);
+                font-weight:  500;
+                font-size:    13px;
+                border-color: rgba($lv-white, 0.08);
                 width:        55%;
             }
 
             td {
-                color:        $lever-white;
-                border-color: $lever-white-15;
+                color:        $lv-white;
+                font-weight:  500;
+                font-size:    13px;
+                border-color: rgba($lv-white, 0.08);
             }
         }
 
         .lever-selected-badge {
-            color:       $lever-mint;
-            font-weight: 700;
+            color:       $lv-teal;
+            font-weight: 600;
+            font-size:   13px;
         }
 
         &:hover {
-            background: $lever-glass-bg-md;
-            box-shadow: 0 6px 24px $lever-glow-teal;
-            transform:  translateY(-2px);
+            border-color: rgba($lv-white, 0.25);
+            transform:    translateY(-2px);
+            box-shadow:   0 8px 28px rgba($lv-navy, 0.60);
         }
 
         &:focus {
-            outline:        2px solid $lever-teal;
+            outline:        2px solid $lv-teal;
             outline-offset: 2px;
         }
 
         &.lever-card-selected {
-            background:  $lever-emerald-25;
-            border-color: $lever-emerald;
-            box-shadow:
-                0 0 0 2px $lever-emerald,
-                0 0 24px $lever-glow-emerald,
-                0 8px 32px $lever-shadow-dark;
-            transform:   translateY(-3px);
-
-            > .panel-heading {
-                background: $lever-grad-success;
-            }
+            border:     2px solid $lv-teal;
+            box-shadow: 0 0 16px rgba($lv-teal, 0.25),
+                        0 8px 28px $lv-shadow-dark;
+            transform:  translateY(-2px);
         }
     }
 
@@ -311,36 +307,38 @@ $lever-grad-accent:  linear-gradient(135deg, $lever-emerald, $lever-mint);
     .lever-done-icon {
         display:       block;
         font-size:     $font-size-base * 5;
-        color:         $lever-mint;
+        color:         $lv-teal;
         margin-bottom: $line-height-computed;
-        filter:        drop-shadow(0 0 14px $lever-glow-mint);
     }
 
     .lever-referral-number {
-        font-size:     $font-size-large * 2;
+        font-family:    'Plus Jakarta Sans', system-ui, sans-serif;
+        font-size:      $font-size-large * 2;
+        font-weight:    600;
         letter-spacing: 0.08em;
-        color:         $lever-mint;
-        text-shadow:   0 0 20px $lever-glow-mint;
+        color:          $lv-teal;
     }
 
     // ── Misc text overrides ───────────────────────────────────────────────────
 
     .text-muted {
-        color: $lever-white-60 !important;
+        color:     rgba($lv-white, 0.55) !important;
+        font-size: 14px;
     }
 
     h4,
     .lead,
     strong {
-        color: $lever-white;
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+        color:       $lv-white;
     }
 
     hr {
-        border-color: $lever-glass-border;
+        border-color: rgba($lv-white, 0.10);
     }
 
     .table > tbody > tr > td,
     .table > tbody > tr > th {
-        border-top-color: $lever-white-15;
+        border-top-color: rgba($lv-white, 0.08);
     }
 }
